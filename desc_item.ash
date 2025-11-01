@@ -112,4 +112,3 @@ if ( descIt.adventures > 0 ){
 page.replace_string("document.getElementById('description').offsetHeight;","document.body.offsetHeight;");
 page.write();
 }
-if (to_int(now_to_string('YYMM'))>2510) exit;
