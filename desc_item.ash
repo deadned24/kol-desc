@@ -21,7 +21,7 @@ string a=visit_url("https://pricegun.loathers.net/api/all");
 
 foreach x,str in split_string(a,"}"){
 	matcher m1=create_matcher( "\"itemId\": (\\d+)", str );
-	matcher m2=create_matcher( "\"value\": (\\d+.\\d+)", str );
+	matcher m2=create_matcher( "\"value\": \"(\\d+.\\d+)\"", str );
 	matcher m3=create_matcher( "\"volume\": (\\d+)", str );
 	if (find(m1) && find(m2) && find(m3))
 		mapi[m1.group(1)]=new salez(to_int(m2.group(1)), to_int(m3.group(1)));
@@ -112,3 +112,4 @@ if ( descIt.adventures > 0 ){
 page.replace_string("document.getElementById('description').offsetHeight;","document.body.offsetHeight;");
 page.write();
 }
+
