@@ -5,8 +5,10 @@ first run of the day (first item you look at), script will download pricegun dat
 set "useRealTime" to 'true' for real time price checking. it is very slow though.
 */
 
+//remove pricegun, stub pricegun functions
 boolean useRealTime=false;
-boolean usePricegun=to_boolean(get_property("dnUsePricegun"));//if property is not set, it is false
+boolean usePricegun=false;//to_boolean(get_property("dnUsePricegun"));//if property is not set, it is false
+
 
 record salez {int price; int volume;};
 
@@ -21,7 +23,7 @@ string a=visit_url("https://pricegun.loathers.net/api/all");
 
 foreach x,str in split_string(a,"}"){
 	matcher m1=create_matcher( "\"itemId\": (\\d+)", str );
-	matcher m2=create_matcher( "\"value\": \"(\\d+.\\d+)\"", str );
+	matcher m2=create_matcher( "\"value\": \"(\\d+\\.\\d+)\"", str );
 	matcher m3=create_matcher( "\"volume\": (\\d+)", str );
 	if (find(m1) && find(m2) && find(m3))
 		mapi[m1.group(1)]=new salez(to_int(m2.group(1)), to_int(m3.group(1)));
@@ -48,6 +50,8 @@ return new salez(0,0);
 
 void main(){
 
+//remove pricegun, stub pricegun functions
+/*
 if ( !useRealTime && !to_boolean(get_property("_pricegunz")) && usePricegun )
 	buildPrices();
 
@@ -56,6 +60,10 @@ buffer page = visit_url();
 salez [string] mapi;//map api
 if (usePricegun)
 	file_to_map("dn_pricegunz", mapi);
+*/	
+buffer page = visit_url();
+salez [string] mapi;//map api
+	
 
 //oh boy, last available date. if blank or not found, it's "evergreen" (?)
 string LAD=page.group_string("<[^<>]+Last Available Date: (\\w+-\\w+)[^<>]+>")[0][1];
@@ -94,7 +102,7 @@ if ( descIt.adventures > 0 ){
 	//computes the average from size 1 or 2 array. either (0+value)/1 or (value1+value2)/2 depending on the array length
 	foreach c,d in split_string(descIt.adventures,"-")
 		counter=(counter+to_int(d))/(c+1);
-	//actual calculation is the sum of full/drunk/spleen. usually 2 are 0
+	//actual calculation is the sum of full/drunk/spleen. usually 2 of the 3 are "0"
 	counter/=max(1,descIt.fullness+descIt.inebriety+descIt.spleen);//set denominator to 1 if 0 to avoid divide by zero errors
 //	print(counter);
 
@@ -112,4 +120,3 @@ if ( descIt.adventures > 0 ){
 page.replace_string("document.getElementById('description').offsetHeight;","document.body.offsetHeight;");
 page.write();
 }
-
