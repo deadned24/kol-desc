@@ -40,7 +40,7 @@ if ( contains_text(source,"1") && !contains_text(source,"either") ){
 
 if (source=="")
 	source="???";
-page.replace_string("</center></font>","</center></font><br><b>source:</b> "+source+"");
+page.replace_string("</b></font></center></font>","</b></font></center></font><br><b>source:</b> "+source+"");
 
 
 //start building up glyphs in bottom right corner
