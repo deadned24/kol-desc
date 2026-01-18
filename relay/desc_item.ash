@@ -61,7 +61,7 @@ else if (now_to_string('YYYY') <= to_int(format_date_time('YYYY-MM',LAD,'YYYY'))
 	LAD="Last Available Date: <font style=\"color:black; font-weight:bold\">"+LAD+"</font>";
 else
 	LAD="Last Available Date: <font style=\"color:grey; font-weight:bold\">"+LAD+"</font>";
-page.replace_string("<tagdn>","<tagdn><br>"+LAD);
+page.replace_string("<tagdn>","<tagdn><p>"+LAD);//want this to be last.
 }
 
 //negative item ids are possible (npc shops)
@@ -150,7 +150,7 @@ boolean [monster] MonMen;
 	else if (count(MonMen)>1){
 		page.replace_string("<tagdn>","<br>Drops from: <tagdn>");
 		foreach mon in MonMen
-			page.replace_string("<tagdn>","<tagdn><br>🞄 <b style='cursor: pointer;' onclick=poop('desc_mon.php?mon="+mon.id+"','',400,400,'')>"+mon+"</b>");
+			page.replace_string("<tagdn>","<br>🞄 <b style='cursor: pointer;' onclick=poop('desc_mon.php?mon="+mon.id+"','',400,400,'')>"+mon+"</b><tagdn>");
 		}
 }
 
@@ -159,14 +159,14 @@ if (descIt.is_npc_item()){
 	file_to_map("data/npcstores.txt", npcStore);
 	foreach seller,b,c in npcStore {
 	if (c==descIt){
-		page.replace_string("<tagdn>","Source: <b>"+seller+"</b>&nbsp;("+to_string(npcStore[seller][b][c],"%,d")+"&nbsp;meat)<br><tagdn>");
+		page.replace_string("<tagdn>","<br>Source: <b>"+seller+"</b>&nbsp;("+to_string(npcStore[seller][b][c],"%,d")+"&nbsp;meat)<tagdn>");
 		break;
 		}
 	}
 }
 
 if (descIt.is_coinmaster_item())
-	page.replace_string("<tagdn>","Source: <b>"+descIt.seller+"</b><br><tagdn>");
+	page.replace_string("<tagdn>","<br>Source: <b>"+descIt.seller+"</b><tagdn>");
 else if (craft_type(descIt)!="[cannot be created]" && descIt!=$item[none]){
 /*
 if it's craftable, it's usually A + B, except for multi-use things, and sushi (but sushi isn't real), and gnomish super tinkering (uses 3 items).
