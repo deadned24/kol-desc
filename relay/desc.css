@@ -1,0 +1,19 @@
+#menuBox {
+padding:none;
+display: none;
+position: absolute;
+top: 30px;          /* adjust to align under the icon */
+left: 0;
+padding: 8px;
+background: #f9f9f9;
+border: 1px solid #ccc;
+box-shadow: 2px 2px 5px rgba(0,0,0,0.2);
+}
+#icon {
+cursor: pointer;
+padding:none;
+display: inline;
+}
+form {
+display: inline;
+}
