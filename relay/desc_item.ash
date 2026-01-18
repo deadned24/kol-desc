@@ -183,7 +183,7 @@ brickos monsters are wrong b/c matching is complicated and I'm just passing alon
 "Summon Clip Art" is wrong: "toasted brie	CLIPART	5	5	6" = "Summon Clip Art: pasta spoon, pasta spoon, ravioli hat"
 */
 	if (craft_type(descIt)=="Summon Clip Art")
-		page.replace_string("<tagdn>","Created by "+craft_type(descIt)+"<br><tagdn>");
+		page.replace_string("<tagdn>","<br>Created by "+craft_type(descIt)+"<tagdn>");
 	else if ( contains_text(craft_type(descIt),"multi-use") ){
 		record resultz {string action; string thing1; string thing2;};
 		resultz [item] instructable;
@@ -192,7 +192,7 @@ brickos monsters are wrong b/c matching is complicated and I'm just passing alon
 		if (museThing.find()){
 			item itt1=to_item(museThing.group(1));
 			string museNum=museThing.group(2);
-			page.replace_string("<tagdn>","Created by "+craft_type(descIt)+": <span style=\"cursor: pointer; font-weight:bold;\" onclick=item("+itt1.descid+")>"+itt1+"</span> (x"+museNum+") "+(instructable[descIt].thing2!=""?instructable[descIt].thing2:"")+"<br><tagdn>");
+			page.replace_string("<tagdn>","<br>Created by "+craft_type(descIt)+": <span style=\"cursor: pointer; font-weight:bold;\" onclick=item("+itt1.descid+")>"+itt1+"</span> (x"+museNum+") "+(instructable[descIt].thing2!=""?instructable[descIt].thing2:"")+"<tagdn>");
 		}
 	}
 	else{
@@ -203,11 +203,11 @@ brickos monsters are wrong b/c matching is complicated and I'm just passing alon
 		item itt1=instructable[descIt].it1;
 		item itt2=instructable[descIt].it2;
 		item itt3=instructable[descIt].it3;
-		page.replace_string("<tagdn>","Created by "+craft_type(descIt)+
+		page.replace_string("<tagdn>","<br>Created by "+craft_type(descIt)+
 		(itt1!=$item[none]?": <span style=\"cursor: pointer; font-weight:bold;\" onclick=item("+itt1.descid+")>"+itt1+"</span>":"")+
 		(itt2!=$item[none]?", <span style=\"cursor: pointer; font-weight:bold;\" onclick=item("+itt2.descid+")>"+itt2+"</span>":"")+
 		(itt3!=$item[none]?", <span style=\"cursor: pointer; font-weight:bold;\" onclick=item("+itt3.descid+")>"+itt3+"</span>":"")+
-		"<br><tagdn>");
+		"<tagdn>");
 	}
 //print(descIt+": "+ craft_type(descIt));
 }
@@ -224,4 +224,3 @@ page.replace_string("document.getElementById('description').offsetHeight;","docu
 page.replace_string("</body>","<script src=desc.js></script></body>");
 page.write();
 }
-
