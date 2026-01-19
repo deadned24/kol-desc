@@ -96,7 +96,7 @@ page.append("<p>"+monAtt);
 //window resizing. copied from kol's desc_item.php.
 page.append("<script type= \"text/javascript \">\
 	<!--\
-	var resizetries = 0;\
+	var resizetries = 11;\
 	var fsckinresize;\
 	setTimeout(fsckinresize = function ()  {\
 		var desch = document.body.offsetHeight;\
@@ -119,4 +119,5 @@ page.append("<script type= \"text/javascript \">\
 	<script src= \"/onfocus.1.js \"></script></html>");
 page.write();
 }
+
 
