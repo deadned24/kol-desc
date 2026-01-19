@@ -73,6 +73,7 @@ function loadGraph(data) {
 
     /* ------------------- Layout -------------------------- */
     const layout = {
+      title: dataObj.name,
       margin: {t: 30},
       xaxis: {title: 'Date'},
       yaxis: {
