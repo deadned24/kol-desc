@@ -22,7 +22,7 @@ function printTimeAgo(pastDate) {\
         //var lastsold=data.sales[0].unitPrice;\
         var lastsold=data.value\
         var altText=\"Last sale: \"+data.sales[0].quantity+\" sold @ \"+data.sales[0].unitPrice+\" meat, \"+printTimeAgo(new Date(data.sales[0].date));\
-        $('#priceGun').attr('title',altText).text(parseInt(lastsold).toLocaleString('en-US', {minimumFractionDigits: 0})+' meat / '+data.volume.toLocaleString()+' sold').css('cursor', 'pointer').on('click', function() {\
+        $('#priceGun').attr('title',altText).text(parseInt(lastsold).toLocaleString('en-US', {minimumFractionDigits: 0})+' meat / '+data.volume.toLocaleString()+' sold').css('cursor', 'pointer').one('click', function() {\
 //	alert(altText);\
 function drawWhenResized() {\
   window.removeEventListener('resize', drawWhenResized);\
@@ -233,3 +233,4 @@ page.replace_string("</body>","<script src=desc.js></script></body>");
 page.replace_string("var resizetries = 0;","var resizetries = 11;");
 page.write();
 }
+
