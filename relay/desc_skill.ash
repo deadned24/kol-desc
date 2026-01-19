@@ -46,8 +46,9 @@ page.replace_string("</blockquote>","<p>"+LAD+"</blockquote>");
 
 //kol builds window sizes around the div in the popup (because its fetched in shop mouseovers), but we've added stuff and now the page scrolls. We'll using the size of <body> instead.
 page.replace_string("document.getElementById('description').offsetHeight;","document.body.offsetHeight;");
-
+page.replace_string("var resizetries = 0;","var resizetries = 11;");
 page.replace_string("</body>","<script src=desc.js></script></body>");
 
 page.write();
 }
+
