@@ -111,5 +111,7 @@ if (to_boolean(get_property("dnShowLAD")))
 	page.replace_string("</body>","<br>"+LAD+"</body>");
 
 page.replace_string("document.getElementById('description').offsetHeight;","document.body.offsetHeight;");
+page.replace_string("var resizetries = 0;","var resizetries = 11;");
 page.replace_string("</body>","<script src=desc.js></script></body>");
 page.write();
+
