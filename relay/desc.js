@@ -1,8 +1,7 @@
-var url_form="desc_mon.ash";
+var url_form="desc_mon.ash"; 
 
 $(function () {
     $('form#descMenu').on('change', 'input[type=checkbox]', function (e) {
-//        e.preventDefault();
         $.ajax({
             url: url_form,
             type: 'POST',
@@ -12,16 +11,19 @@ $(function () {
             }
         });
     });
-    // Toggle menu visibility when the icon is clicked
+    
+    // show menu when menu is clicked
     $('#icon').on('click', function (e) {
-        e.stopPropagation();               // keep click from reaching document
+        e.stopPropagation();               
         $('#menuBox').toggle();
     });
-    // Hide menu when clicking anywhere else on the page
+
+    // Hide menu when clicking outside
     $(document).on('click', function () {
         $('#menuBox').hide();
     });
-    // Prevent clicks inside the menu from bubbling up and closing it
+    
+    // Prevent clicks inside the menu from closing it
     $('#menuBox').on('click', function (e) {
         e.stopPropagation();
     });
