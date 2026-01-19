@@ -2,6 +2,7 @@
 
 void pricegunJS(buffer page, string itemid){
 //uses ajax to make the waiting less bad for real time price checks. we're not storing any data
+page.replace_string("</head>","</head>\n<script src=\"https://cdn.jsdelivr.net/npm/plotly.js-dist-min@2.32.0\"></script>");
 string jsFetch="\
   <script>\
     apiUrl = 'https://pricegun.loathers.net/api/"+itemid+"';\
@@ -22,7 +23,14 @@ function printTimeAgo(pastDate) {\
         var lastsold=data.value\
         var altText=\"Last sale: \"+data.sales[0].quantity+\" sold @ \"+data.sales[0].unitPrice+\" meat, \"+printTimeAgo(new Date(data.sales[0].date));\
         $('#priceGun').attr('title',altText).text(parseInt(lastsold).toLocaleString('en-US', {minimumFractionDigits: 0})+' meat / '+data.volume.toLocaleString()+' sold').css('cursor', 'pointer').on('click', function() {\
-	alert(altText);\
+//	alert(altText);\
+function drawWhenResized() {\
+  window.removeEventListener('resize', drawWhenResized);\
+  loadGraph(data);\
+}\
+window.resizeTo(750, 600);\
+$('#description').empty();\
+window.addEventListener('resize', drawWhenResized);\
 	});\
         $('#priceGun').text(data.error);\
         console.log(altText);\
@@ -221,8 +229,7 @@ if (to_boolean(get_property("dnUsePricegun")) && descIt.tradeable)
 
 //kol builds window sizes around the div in the popup (because its fetched in shop mouseovers), but we've added stuff and now the page scrolls. We'll use size of <body> instead
 page.replace_string("document.getElementById('description').offsetHeight;","document.body.offsetHeight;");
-page.replace_string("var resizetries = 0;","var resizetries = 11;");
 page.replace_string("</body>","<script src=desc.js></script></body>");
+page.replace_string("var resizetries = 0;","var resizetries = 11;");
 page.write();
 }
-
