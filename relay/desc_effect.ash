@@ -98,6 +98,8 @@ foreach index,attr in split_string(eff1.attributes,",")
 string toAdd="<div style=\"position: absolute; bottom: 5px; right:20px;\">"+out+"</div>";
 page.replace_string("</body>",toAdd+"</body>");
 page.replace_string("document.getElementById('description').offsetHeight;","document.body.offsetHeight;");
+page.replace_string("var resizetries = 0;","var resizetries = 11;");
 page.replace_string("</body>","<script src=desc.js></script></body>");
 page.write();
 }
+
