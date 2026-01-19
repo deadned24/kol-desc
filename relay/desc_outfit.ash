@@ -31,5 +31,7 @@ page.replace_string("<p>Outfit Bonus",out+"<p>Outfit Bonus");
 }
 
 page.replace_string("document.getElementById('description').offsetHeight;","document.body.offsetHeight;");
+page.replace_string("var resizetries = 0;","var resizetries = 11;");
 page.replace_string("</body>","<script src=desc.js></script></body>");
 page.write();
+
