@@ -79,14 +79,14 @@ function loadGraph(data) {
       yaxis: {
         title: 'Price',
         side: 'left',
-        range: priceRange,
+        range: [0, 2*priceRange[1]],
         showgrid: false
       },
       yaxis2: {
         title: 'Volume',
         side: 'right',
         overlaying: 'y',
-        range: volumeRange,
+        range: [0, volumeRange[1]],
         showgrid: false
       },
       legend: {orientation: 'h', x: 0.5, xanchor: 'center', y: -0.2},
