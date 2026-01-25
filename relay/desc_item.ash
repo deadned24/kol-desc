@@ -20,13 +20,13 @@ function printTimeAgo(pastDate) {\
         try {\
         const data = await $.getJSON(apiUrl);\
         //var lastsold=data.sales[0].unitPrice;\
-        var lastsold=data.value\
+        var lastsold=data.value.__decimal__\
         var altText=\"Last sale: \"+data.sales[0].quantity+\" sold @ \"+data.sales[0].unitPrice+\" meat, \"+printTimeAgo(new Date(data.sales[0].date));\
         $('#priceGun').attr('title',altText).text(parseInt(lastsold).toLocaleString('en-US', {minimumFractionDigits: 0})+' meat / '+data.volume.toLocaleString()+' sold').css('cursor', 'pointer').one('click', function() {\
 //	alert(altText);\
 function drawWhenResized() {\
   window.removeEventListener('resize', drawWhenResized);\
-  loadGraph(data);\
+  loadGraph(data);//graph is loaded into #description\
 }\
 window.resizeTo(750, 600);\
 $('#description').empty();\

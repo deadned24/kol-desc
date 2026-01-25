@@ -36,7 +36,7 @@ function loadGraph(data) {
     const history = dataObj.history;
 
     const dates   = history.map(d => d.date);               // ISO strings
-    const prices  = history.map(d => Number(d.price));      // numeric price
+    const prices  = history.map(d => Number(d.price.__decimal__));      // numeric price
     const volumes = history.map(d => d.volume);            // numeric volume
 
     /* --------------- Compute padded axis ranges ----------- */
@@ -57,7 +57,7 @@ function loadGraph(data) {
       name: 'Price',
       type: 'scatter',
       mode: 'lines+markers',
-      line: {color: '#0066ff'},
+      line: {color: '#06f'},
       yaxis: 'y1'               // left axis
     };
 
@@ -66,8 +66,7 @@ function loadGraph(data) {
       y: volumes,
       name: 'Volume',
       type: 'bar',
-      opacity: 0.6,
-      marker: {color: '#ff6600'},
+      marker: {color: '#7d7'},
       yaxis: 'y2'               // right axis
     };
 
@@ -79,18 +78,18 @@ function loadGraph(data) {
       yaxis: {
         title: 'Price',
         side: 'left',
+        overlaying: 'y2',
         range: [0, 2*priceRange[1]],
         showgrid: false
       },
       yaxis2: {
         title: 'Volume',
         side: 'right',
-        overlaying: 'y',
-        range: [0, volumeRange[1]],
+        range: [0, volumeRange[1]+1],
         showgrid: false
       },
       legend: {orientation: 'h', x: 0.5, xanchor: 'center', y: -0.2},
-      staticPlot: true          // disables animation & interaction
+      staticPlot: true
     };
 
     Plotly.newPlot('description', [priceTrace, volumeTrace], layout);
