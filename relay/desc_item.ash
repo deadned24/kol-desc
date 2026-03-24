@@ -21,7 +21,8 @@ function printTimeAgo(pastDate) {\
         const data = await $.getJSON(apiUrl);\
         //var lastsold=data.sales[0].unitPrice;\
         var lastsold=data.value.__decimal__\
-        var altText=\"Last sale: \"+data.sales[0].quantity+\" sold @ \"+data.sales[0].unitPrice.__decimal__+\" meat, \"+printTimeAgo(new Date(data.sales[0].date));\        $('#priceGun').attr('title',altText).text(parseInt(lastsold).toLocaleString('en-US', {minimumFractionDigits: 0})+' meat / '+data.volume.toLocaleString()+' sold').css('cursor', 'pointer').one('click', function() {\
+        var altText=\"Last sale: \"+data.sales[0].quantity+\" sold @ \"+data.sales[0].unitPrice.__decimal__+\" meat, \"+printTimeAgo(new Date(data.sales[0].date));\
+        $('#priceGun').attr('title',altText).text(parseInt(lastsold).toLocaleString('en-US', {minimumFractionDigits: 0})+' meat / '+data.volume.toLocaleString()+' sold').css('cursor', 'pointer').one('click', function() {\
 //	alert(altText);\
 function drawWhenResized() {\
   window.removeEventListener('resize', drawWhenResized);\
@@ -59,25 +60,29 @@ page.replace_string("</head>","<link rel=\"stylesheet\" type=\"text/css\" href=\
 
 page.replace_string("</blockquote>","<tagdn></blockquote>");//<tagdn> is the hook for our addons.
 
+//negative item ids are possible (npc shops)
+string itemid=page.group_string("<[^<>]+itemid: (-?\\d+)[^<>]+>")[0][1]; 
+item descIt=to_item(itemid); //convert parsed item id to mafia item 
+
 if (to_boolean(get_property("dnShowLAD"))){
 //oh boy, last available date. if blank or not found, it is "evergreen" (?)
+
 string LAD=page.group_string("<[^<>]+Last Available Date: (\\w+-\\w+)[^<>]+>")[0][1];
+
 if (LAD=="")
 	LAD="Last Available Date: <font style=\"color:black; font-weight:bold;\" title='probably'>Evergreen</font>";
 else if (now_to_string('YYYY') <= to_int(format_date_time('YYYY-MM',LAD,'YYYY'))+2)
 	LAD="Last Available Date: <font style=\"color:black; font-weight:bold\">"+LAD+"</font>";
 else
 	LAD="Last Available Date: <font style=\"color:grey; font-weight:bold\">"+LAD+"</font>";
-page.replace_string("<tagdn>","<tagdn><p>"+LAD);//want this to be last.
-}
 
-//negative item ids are possible (npc shops)
-string itemid=page.group_string("<[^<>]+itemid: (-?\\d+)[^<>]+>")[0][1]; 
-item descIt=to_item(itemid); //convert parsed item id to mafia item 
+page.replace_string("<tagdn>","<tagdn><p>"+LAD);//want LAD to be last on page, so it goes after <tagdn>
+}
 
 string wiki="<a href=\"https://wiki.kingdomofloathing.com/"+descIt.name+"\" target=\"_blank\" style=\"float: right;\">[wiki]</a>";
 string pg_mall=(descIt.tradeable ? "<span id=priceGun></span><a href=\"mall.php?pudnuggler="+url_encode(descIt.name)+"\" target=\"mainpane\" style=\"float: right;\">[mall]</a>": "");
 
+//Deadned's Itemized Properties
 string [string] DIP={
 	"pricegun (<b>unsupported</b>)":"dnUsePricegun",
 	"consumable helper":"dnShowAdvs",
@@ -219,9 +224,14 @@ brickos monsters are wrong b/c matching is complicated and I'm just passing alon
 //print(descIt+": "+ craft_type(descIt));
 }
 
-// do we care about zap and fold groups? I don't
-//foreach it in get_related(descIt, "zap") // "zap" or "fold",??
-//	print("> "+it);
+// do we care about zap and fold groups? not really
+string zappable;
+foreach it in get_related(descIt, "zap") // "zap" or "fold",??
+	zappable+=it+", ";
+if (length(zappable)>0){
+	zappable=zappable.substring(0,length(zappable)-2);//trailing comma fix
+	page.replace_string("--><br><br>","--><br><br><span style='cursor: pointer;' title=\""+zappable+"\">Zappable</span><br>");
+	}
 }
 if (to_boolean(get_property("dnUsePricegun")) && descIt.tradeable)
 	pricegunJS(page,itemid);
@@ -232,5 +242,4 @@ page.replace_string("</body>","<script src=desc.js></script></body>");
 page.replace_string("var resizetries = 0;","var resizetries = 11;");
 page.write();
 }
-
 
