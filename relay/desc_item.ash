@@ -230,7 +230,7 @@ foreach it in get_related(descIt, "zap") // "zap" or "fold",??
 	zappable+=it+", ";
 if (length(zappable)>0){
 	zappable=zappable.substring(0,length(zappable)-2);//trailing comma fix
-	page.replace_string("--><br><br>","--><br><br><span style='cursor: pointer;' title=\""+zappable+"\">Zappable</span><br>");
+	page.replace_string("--><br><br>","--><br><br><span title=\""+zappable+"\">Zappable</span><br>");
 	}
 }
 if (to_boolean(get_property("dnUsePricegun")) && descIt.tradeable)
