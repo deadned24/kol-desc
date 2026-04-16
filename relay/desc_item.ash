@@ -1,4 +1,4 @@
-// insterts wiki and mall links to item description. exposes item ID and Last Available Date (from in html comments). optioanlly adds pricegun and other item hints, also LAD is optional too. 
+// insterts wiki and mall links to item description. exposes item ID and Last Available Date (from in html comments). optionally adds pricegun and other item hints, also LAD is optional too. 
 
 void pricegunJS(buffer page, string itemid){
 //uses ajax to make the waiting less bad for real time price checks. we're not storing any data
@@ -64,6 +64,10 @@ page.replace_string("</blockquote>","<tagdn></blockquote>");//<tagdn> is the hoo
 string itemid=page.group_string("<[^<>]+itemid: (-?\\d+)[^<>]+>")[0][1]; 
 item descIt=to_item(itemid); //convert parsed item id to mafia item 
 
+//page specfic overrides in javascript. (maybe have an ash override somewhere else later) 
+if (file_to_buffer("item."+itemid+".js").length() != 0)
+	page.replace_string("</head>","<script src=\"item."+itemid+".js\" defer></script></head>");
+
 if (to_boolean(get_property("dnShowLAD"))){
 //oh boy, last available date. if blank or not found, it is "evergreen" (?)
 
@@ -82,7 +86,7 @@ page.replace_string("<tagdn>","<tagdn><p>"+LAD);//want LAD to be last on page, s
 string wiki="<a href=\"https://wiki.kingdomofloathing.com/"+descIt.name+"\" target=\"_blank\" style=\"float: right;\">[wiki]</a>";
 string pg_mall=(descIt.tradeable ? "<span id=priceGun></span><a href=\"mall.php?pudnuggler="+url_encode(descIt.name)+"\" target=\"mainpane\" style=\"float: right;\">[mall]</a>": "");
 
-//Deadned's Itemized Properties
+//Deadned's Itemized Properties (aka DIP switches)
 string [string] DIP={
 	"pricegun (<b>unsupported</b>)":"dnUsePricegun",
 	"consumable helper":"dnShowAdvs",
@@ -230,7 +234,7 @@ foreach it in get_related(descIt, "zap") // "zap" or "fold",??
 	zappable+=it+", ";
 if (length(zappable)>0){
 	zappable=zappable.substring(0,length(zappable)-2);//trailing comma fix
-	page.replace_string("--><br><br>","--><br><br><span title=\""+zappable+"\">Zappable</span><br>");
+	page.replace_string("--><br><br>","--><br><br><span title=\""+zappable+"\">(Zappable)</span><br>");
 	}
 }
 if (to_boolean(get_property("dnUsePricegun")) && descIt.tradeable)
