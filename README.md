@@ -17,3 +17,5 @@ KoLmafia relay script for the web game Kingdom of Loathing (kol). Enhances in‑
 ## Example:
 <img width="400" height="520" alt="Screenshot at 2026-01-17 17-54-23" src="https://github.com/user-attachments/assets/5d58be76-7930-41b7-a25e-a5c3cadceac0" />
 
+## item specfic overrides
+Item specfic overrides: if file `item.id.js` exists, where `id` is the item's id (eg "item.11609.js), the javascript will execute on page load. 
