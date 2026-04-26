@@ -145,14 +145,17 @@ if (item_type(descIt) == "familiar equipment"){
 if (to_boolean(get_property("dnShowDrops"))){
 
 //Avatar preview. Looks through monsters for item drop to determine image to preview. Mostly works
-monster MOTD;//monster of the day
+monster MOTD;///monster of the day
 if (item_type(descIt)=="avatar potion"){
 foreach mon in $monsters[]
 	if (item_drops(mon) contains descIt){
 		MOTD=mon;
 		break;
 		}
-page.replace_string("<tagdn>","<center><br><img src=/images/adventureimages/"+MOTD.image+" onerror=\"this.style.display='none'\"><br><b style='cursor: pointer;' onclick=poop('desc_mon.php?mon="+MOTD.id+"','',400,400,'')>"+MOTD+"</b></center><tagdn>");
+if (MOTD==$monster[none])
+	page.replace_string("<tagdn>","<div style=\"color:red;\"><b>ERROR</b>: kolmafia does not have this item as any monster's drop. <a href=\"https://kolmafia.us/forums/bug-reports.24/\">Bug report it</a> if you want it fixed.</div>");
+else
+	page.replace_string("<tagdn>","<center><br><img src=/images/adventureimages/"+MOTD.image+" onerror=\"this.style.display='none'\"><br><b style='cursor: pointer;' onclick=poop('desc_mon.php?mon="+MOTD.id+"','',400,400,'')>"+MOTD+"</b></center><tagdn>");
 }
 else {
 //shows the monster that drops this item (if it isn't an avatar potion). desc_mon is a relay script
