@@ -8,8 +8,9 @@ page.replace_string("</head>","\n<script src=\"https://code.jquery.com/jquery-3.
 page.replace_string("</head>","<link rel=\"stylesheet\" type=\"text/css\" href=\"desc.css\"></head>");
 
 string skil=page.group_string("<b>(.*?)<\/b>")[0][1]; //skill name (matching text between <b> tag)
-string out=" <a href=\"https://wiki.kingdomofloathing.com/"+skil+"\" target='_blank' title='thekolwiki' style='float: right;'>[wiki]</a><br>";
+string out=" <a href=\""+to_wiki_url(skil)+"\" target='_blank' title='thekolwiki' style='float: right;'>[wiki]</a><br>";
 
+//Deadned's Itemized Properties
 string [string] DIP={
 	"show Standard dates":"dnShowLAD",
 	};
@@ -30,7 +31,7 @@ else if (to_int(now_to_string('YYYY')) <= to_int(format_date_time('YYYY-MM',LAD,
 
 	//shows time left in standard. Is this even useful information? 
 	string LAD2=(to_int(format_date_time('YYYY-MM',LAD,'YYYY'))+2);//LAD plus 2 years
-	string exp=timestamp_to_date( date_to_timestamp("yyyyMMdd",LAD2+"1231") - date_to_timestamp("yyyyMMdd",now_to_string('yyyyMMdd')),"M 'months' d 'days'"); //will report year from 197x because we're using epoach as difference point
+	string exp=timestamp_to_date( date_to_timestamp("yyyyMMdd",LAD2+"1131") - date_to_timestamp("yyyyMMdd",now_to_string('yyyyMMdd')),"M 'months' d 'days'"); //will report year from 197x because we're using epoach as difference point
 	//doing years separately (time math is hard).
 	string years=to_string(to_int(format_date_time('YYYY-MM',LAD,'YYYY'))+2-to_int(now_to_string('YYYY')) );
 	years=(years==1?"1 year":years+" years"); //2,1 or 0
@@ -51,4 +52,3 @@ page.replace_string("</body>","<script src=desc.js></script></body>");
 
 page.write();
 }
-
