@@ -58,8 +58,9 @@ string [string] famAbility = {
 "variable":"<img src=/images/itemimages/familiar40.gif title='Varies according to equipment or other factors'>",
 };
 
-out=" <a href=\"https://wiki.kingdomofloathing.com/"+fam+"\" target='_blank' title='thekolwiki' style='float: right;'>[wiki]</a>";
+out=" <a href=\""+to_wiki_url(fam)+"\" target='_blank' title='thekolwiki' style='float: right;'>[wiki]</a>";
 
+//Deadned's Itemized Properties
 string [string] DIP={
 	"show extra info":"dnShowDrops",
 	"show Standard dates":"dnShowLAD",
@@ -114,4 +115,3 @@ page.replace_string("document.getElementById('description').offsetHeight;","docu
 page.replace_string("var resizetries = 0;","var resizetries = 11;");
 page.replace_string("</body>","<script src=desc.js></script></body>");
 page.write();
-
