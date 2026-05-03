@@ -28,16 +28,16 @@ monster MOTD=to_monster(form_field("mon"));
 
 //we are limited to monsters kolmafia knows about. exit if monster isn't found
 if (MOTD ==$monster[none]){
-	page.append("<center><img src=images/adventureimages/nopic.gif><br>Jick: [describe me] ("+form_field("mon")+")</center>");
+	page.append("<center><img src=images/adventureimages/nopic.gif><br>Jick: [describe me] (#"+form_field("mon")+")</center>");
 	page.write();
 	return;
 	}
 
 //start writing the page. 
-string wiki="<a href=\"https://wiki.kingdomofloathing.com/"+MOTD+"\" target=\"_blank\" style=\"float: right;\">[wiki]</a>";
+string wiki="<a href=\""+to_wiki_url(MOTD)+"\" target=\"_blank\" style=\"float: right;\">[wiki]</a>";
 page.append("# "+MOTD.id+wiki+"<br>");
 page.append("<center>");
-page.append("<img src=images/adventureimages/"+MOTD.image+"></a><br>");
+page.append("<img style=\"min-height:100px;\" src=images/adventureimages/"+MOTD.image+"></a><br>");
 page.append("<b>"+MOTD.article+" "+MOTD.name+"</b>"+(MOTD.group>1?" (x"+MOTD.group+")":""));
 page.append("</center>");
 
@@ -48,6 +48,8 @@ string [string] color={"none":"black","hot":"red","cold":"blue","spooky":"grey",
 
 //phylum and element, using maps from above for styling.
 page.append("<br>Phylum: <b>"+MOTD.phylum+"</b><img src=images/itemimages/"+flavor[to_string(MOTD.phylum)]+">");
+foreach s in MOTD.sub_types
+	page.append("& "+s+" ");//TODO: make it look nice
 page.append("<br>Element: <span style=\"font-weight:bold; color:"+color[to_string(MOTD.defense_element)]+"\">"+MOTD.defense_element+"</span>");
 
 //build a map for monster locations. eg MonLoc[$location[spooky forest]]=true
@@ -119,5 +121,4 @@ page.append("<script type= \"text/javascript \">\
 	<script src= \"/onfocus.1.js \"></script></html>");
 page.write();
 }
-
 
