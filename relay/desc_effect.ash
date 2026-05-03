@@ -13,7 +13,8 @@ page.replace_string("</head>","<link rel=\"stylesheet\" type=\"text/css\" href=\
 string effid=page.group_string("<[^<>]+effectid: (\\d+)[^<>]+>")[0][1];
 effect eff1=to_effect(effid);
 
-string [string] DIP={
+//Deadned's Itemized Properties
+string [string] DIP={ 
 	"show source":"dnShowDrops",
 	};
 string mbox="<form id=\"descMenu\"><div id=menuBox>";
@@ -21,7 +22,7 @@ foreach str,P in DIP
 	mbox+="<label><input type=\"checkbox\" "+(get_property(P)=="true"?"checked":"")+" id=\""+P+"\">"+str+"</label><br>";	
 mbox+="</div></form>";
 
-string wiki="<a href=\"https://wiki.kingdomofloathing.com/"+eff1.name+"\" target=\"_blank\" style=\"float: right;\">[wiki]</a>";
+string wiki="<a href=\""+to_wiki_url(eff1)+"\" target=\"_blank\" style=\"float: right;\">[wiki]</a>";
 page.replace_string("description\">","description\"><div id=icon>☰</div> "+mbox+effid+wiki);
 
 //add "source: " to the page under enchantment
@@ -79,6 +80,7 @@ string [string] effGlyphs = {
 "nopvp":"<img src=/images/itemimages/flower.gif style=\"opacity: 0.5;\" title='nopvp'>", 
 "notcrs":"<img src=/images/itemimages/dice.gif style=\"opacity: 0.5;\" title='notcrs'>", //??
 "song":"<img src=/images/itemimages/notes.gif title='song'>", 
+"shanty":"<img src=/images/itemimages/music.gif title='shanty'>", 
 "hottub": "hottub",//just used for Coated in Slime
 };
 
@@ -102,4 +104,3 @@ page.replace_string("var resizetries = 0;","var resizetries = 11;");
 page.replace_string("</body>","<script src=desc.js></script></body>");
 page.write();
 }
-
