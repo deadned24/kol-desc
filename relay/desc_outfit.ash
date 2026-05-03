@@ -6,11 +6,9 @@ page.replace_string("</head>","<link rel=\"stylesheet\" type=\"text/css\" href=\
 
 string outFit=page.group_string("<br><b>([^\\<]+)</b>")[0][1];
 
+//Deadned's Itemized Properties
 string [string] DIP={
-//	"pricegun (<b>unsupported</b>)":"dnUsePricegun",
-//	"consumable helper":"dnShowAdvs",
 	"show outfit parts":"dnShowDrops",
-//	"show Standard dates":"dnShowLAD",
 	};
 string mbox="<form id=\"descMenu\"><div id=menuBox>";
 foreach str,P in DIP
@@ -18,7 +16,7 @@ foreach str,P in DIP
 mbox+="</div></form>";
 
 string outID= form_field("whichoutfit");
-string wiki="<a href=\"https://wiki.kingdomofloathing.com/"+outFit+"\" target=\"_blank\" style=\"float: right;\">[wiki]</a><br>";
+string wiki="<a href=\""+to_wiki_url(outFit)+"\" target=\"_blank\" style=\"float: right;\">[wiki]</a><br>";
 page.replace_string("description\">","description\"><div id=icon>☰</div> "+mbox+outID+wiki);
 
 if (to_boolean(get_property("dnShowDrops"))){
@@ -34,4 +32,3 @@ page.replace_string("document.getElementById('description').offsetHeight;","docu
 page.replace_string("var resizetries = 0;","var resizetries = 11;");
 page.replace_string("</body>","<script src=desc.js></script></body>");
 page.write();
-
