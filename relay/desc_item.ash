@@ -83,7 +83,7 @@ else
 page.replace_string("<tagdn>","<tagdn><p>"+LAD);//want LAD to be last on page, so it goes after <tagdn>
 }
 
-string wiki="<a href=\"https://wiki.kingdomofloathing.com/"+descIt.name+"\" target=\"_blank\" style=\"float: right;\">[wiki]</a>";
+string wiki="<a href=\""+to_wiki_url(descIt)+"\" target=\"_blank\" style=\"float: right;\">[wiki]</a>";
 string pg_mall=(descIt.tradeable ? "<span id=priceGun></span><a href=\"mall.php?pudnuggler="+url_encode(descIt.name)+"\" target=\"mainpane\" style=\"float: right;\">[mall]</a>": "");
 
 //Deadned's Itemized Properties (aka DIP switches)
