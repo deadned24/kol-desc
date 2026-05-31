@@ -21,8 +21,9 @@ page.replace_string("description\">","description\"><div id=icon>☰</div> "+mbo
 
 if (to_boolean(get_property("dnShowDrops"))){
 string out="<br></center><dl><dt><center>Outfit Parts:</center></dt>";
-foreach _,it in outfit_pieces(outFit) 
-	out+="<dd>• <a style=\"text-decoration: none;\" href=desc_item.php?whichitem="+it.descid+">"+it+"</a></dd>";
+//modref 1-ball to see Modifiers list & values for string_modifier. LAD & familiar effect aren't very useful, but it's a tool tip, so it's fine?
+foreach _,it in outfit_pieces(outFit)
+	out+="<dd> <a style=\"text-decoration: none;\" href=\"desc_item.php?whichitem="+it.descid+"\" title=\'"+string_modifier(it, "Modifiers")+"\'> <img src=\"images/itemimages/"+it.image+"\" height=15px>"+it+"</a></dd>";
 out+="</dl><center>";
 
 page.replace_string("<p>Outfit Bonus",out+"<p>Outfit Bonus");
