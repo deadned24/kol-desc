@@ -62,8 +62,7 @@ page.replace_string("</blockquote>","<tagdn></blockquote>");//<tagdn> is the hoo
 
 //negative item ids are possible (npc shops)
 string itemid=page.group_string("<[^<>]+itemid: (-?\\d+)[^<>]+>")[0][1]; 
-item descIt=to_item(itemid); //convert parsed item id to mafia item 
-
+item descIt=to_item(to_int(itemid)); //convert parsed item id to mafia item 
 //page specfic overrides in javascript. (maybe have an ash override somewhere else later) 
 if (file_to_buffer("item."+itemid+".js").length() != 0)
 	page.replace_string("</head>","<script src=\"item."+itemid+".js\" defer></script></head>");
